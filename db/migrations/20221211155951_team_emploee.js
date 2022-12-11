@@ -1,4 +1,3 @@
-
 exports.up = async function (knex) {
 
   await knex.schema.createTable('team', function (t) {
@@ -10,10 +9,14 @@ exports.up = async function (knex) {
     t.increments().primary();
     t.text('first_name').notNull();
     t.text('last_name').notNull();
+
     t.timestamp('first_day_at_work');
+
+    // ENUM?
     t.text('role').notNull();
 
     t.integer('manager_id').nullable();
+
     t.integer('team_id').notNull();
 
     t.foreign('manager_id').onDelete('SET NULL').references('employee.id');
@@ -24,5 +27,4 @@ exports.up = async function (knex) {
 exports.down = async function (knex) {
   await knex.schema.dropTable('employee');
   await knex.schema.dropTable('team');
-
 };
