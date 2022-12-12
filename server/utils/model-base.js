@@ -19,6 +19,12 @@ module.exports = ({
     return db.insert(props)
       .into(tableName)
       .timeout(timeout)
+      .returning('id')
+      .then(results => {
+        if (!Array.isArray(results)) return results;
+  
+        return results[0];
+      })
       .catch((e) => {
         throw new DataBaseError(e.detail, e.code);
       });

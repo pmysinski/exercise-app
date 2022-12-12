@@ -24,7 +24,7 @@ module.exports = (models) => {
 
   const create = async (data) => {
     await validate(data);
-    await employee.create(data);
+    return await employee.create(data);
   }
 
   const update = async (id, data) => {

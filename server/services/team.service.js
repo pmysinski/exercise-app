@@ -12,7 +12,7 @@ module.exports = (models) => {
     if (existTeamWithSameName) {
       throw new TeamServiceError(`Team with "${data.name}" name already exists`);
     }
-    await team.create(data);
+    return await team.create(data);
   }
 
   const update = async (id, data) => {

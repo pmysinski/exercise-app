@@ -17,10 +17,9 @@ const create = (services) => {
   return async (req, res) => {
     try {
       const { body } = req;
-      await employee.create(employeeBodySerializer(body));
-      res.sendStatus(201);
+      const inserted = await employee.create(employeeBodySerializer(body));
+      res.status(201).json(inserted);
     } catch (e) {
-      console.log('catched', e);
       if (e instanceof employee.EmployeeServiceError) {
         throw createError(400, e.message);
       } else {

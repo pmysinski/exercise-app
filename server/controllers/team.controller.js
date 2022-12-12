@@ -11,10 +11,11 @@ const create = (services) => {
   return async (req, res) => {
     try {
       const { body } = req;
-      await team.create(teamBodySerializer(body));
-      res.sendStatus(201);
+      const inserted = await team.create(teamBodySerializer(body));
+      res.status(201).json(inserted);
     } catch (e) {
-      if (e instanceof team.EmployeeServiceError) {
+      console.log(e)
+      if (e instanceof team.TeamServiceError) {
         throw createError(400, e.message);
       } else {
         throw e;
@@ -32,7 +33,7 @@ const update = (services) => {
       await team.update(id, teamBodySerializer(body));
       res.sendStatus(200);
     } catch (e) {
-      if (e instanceof team.EmployeeServiceError) {
+      if (e instanceof team.TeamServiceError) {
         throw createError(400, e.message);
       } else {
         throw e;
