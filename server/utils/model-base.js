@@ -1,7 +1,7 @@
 
 class DataBaseError extends Error {
   constructor(message, code) {
-    super(message); 
+    super(message);
     this.code = code;
   }
 }
@@ -22,7 +22,7 @@ module.exports = ({
       .returning('id')
       .then(results => {
         if (!Array.isArray(results)) return results;
-  
+
         return results[0];
       })
       .catch((e) => {
@@ -61,6 +61,11 @@ module.exports = ({
       });
   }
 
+  const destroy = id => db.del()
+    .from(tableName)
+    .where({ id })
+    .timeout(timeout)
+
   return {
     name,
     tableName,
@@ -68,6 +73,7 @@ module.exports = ({
     create,
     findOne,
     update,
+    destroy,
     DataBaseError
   }
 }

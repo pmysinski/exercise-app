@@ -14,7 +14,6 @@ const create = (services) => {
       const inserted = await team.create(teamBodySerializer(body));
       res.status(201).json(inserted);
     } catch (e) {
-      console.log(e)
       if (e instanceof team.TeamServiceError) {
         throw createError(400, e.message);
       } else {
