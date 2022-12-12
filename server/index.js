@@ -14,7 +14,7 @@ const signals = {
 
 function shutdown(signal, value) {
   server.close(function () {
-    console.log('server stopped by ' + signal);
+    logger.info('server stopped by ' + signal);
     process.exit(128 + value);
   });
 }
