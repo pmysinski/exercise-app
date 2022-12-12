@@ -26,6 +26,8 @@ exports.up = async function (knex) {
     t.foreign('manager_id').onDelete('SET NULL').references('employee.id');
 
     t.foreign('team_id').references('team.id');
+    t.index('team_id', 'idx_team_id');
+    t.index('manager_id', 'idx_manager_id');
   });
 };
 

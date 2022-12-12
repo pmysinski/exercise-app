@@ -12,6 +12,7 @@ class TeamModelError extends Error {
 module.exports = ({ db }) => {
   const modelbase = ModelBase({ name, tableName, db, ModelError: TeamModelError });
 
+   // add transactions
   const create = async (data) => {
     const existTeamWithSameName = await modelbase.findOne({ name: data.name });
     if (existTeamWithSameName) {
