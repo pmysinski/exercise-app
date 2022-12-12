@@ -3,8 +3,34 @@ const ModelBase = require('../utils/model-base');
 const name = 'team';
 const tableName = 'team';
 
-module.exports = (db) => {
-  const modelbase = ModelBase({ name, tableName, db });
+class TeamModelError extends Error {
+  constructor(message) {
+    super(message);
+  }
+}
 
-  return modelbase;
+module.exports = ({ db }) => {
+  const modelbase = ModelBase({ name, tableName, db, ModelError: TeamModelError });
+
+  const create = async (data) => {
+    const existTeamWithSameName = await modelbase.findOne({ name: data.name });
+    if (existTeamWithSameName) {
+      throw new TeamModelError(`Team with "${data.name}" name already exists`);
+    }
+    return await modelbase.create(data);
+  }
+
+  const update = async (id, data) => {
+    const existTeamWithSameName = await modelbase.findOne({ name: data.name });
+    if (existTeamWithSameName && existTeamWithSameName.id !== id) {
+      throw new TeamModelError(`Team with "${data.name}" name already exists`);
+    }
+    await modelbase.update(id, data);
+  }
+
+  return {
+    ...modelbase,
+    create,
+    update,
+  };
 }

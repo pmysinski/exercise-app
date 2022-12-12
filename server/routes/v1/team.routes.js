@@ -5,10 +5,10 @@ const { postSchema, patchSchema } = require('../../schemas/team.schema');
 
 module.exports = (serverContext) => {
   const router = express.Router();
-  const { services } = serverContext;
+  const { models } = serverContext;
 
-  router.post('/', validate(postSchema), create(services));
-  router.patch('/:id', validate(patchSchema), update(services));
+  router.post('/', validate(postSchema), create(models));
+  router.patch('/:id', validate(patchSchema), update(models));
 
   return router;
 };

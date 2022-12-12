@@ -12,6 +12,7 @@ module.exports = ({
   tableName,
   selectableProps = [],
   timeout = 1000,
+  ModelError,
 }) => {
   const create = props => {
     delete props.id;
@@ -74,6 +75,7 @@ module.exports = ({
     findOne,
     update,
     destroy,
-    DataBaseError
+    DataBaseError,
+    ModelError
   }
 }

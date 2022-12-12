@@ -6,15 +6,15 @@ const teamBodySerializer = ({ name }) => {
   };
 }
 
-const create = (services) => {
-  const { team } = services;
+const create = (models) => {
+  const { team } = models;
   return async (req, res) => {
     try {
       const { body } = req;
       const inserted = await team.create(teamBodySerializer(body));
       res.status(201).json(inserted);
     } catch (e) {
-      if (e instanceof team.TeamServiceError) {
+      if (e instanceof team.ModelError) {
         throw createError(400, e.message);
       } else {
         throw e;
@@ -23,8 +23,8 @@ const create = (services) => {
   }
 };
 
-const update = (services) => {
-  const { team } = services;
+const update = (models) => {
+  const { team } = models;
   return async (req, res) => {
     try {
       const { body } = req;
@@ -32,7 +32,7 @@ const update = (services) => {
       await team.update(id, teamBodySerializer(body));
       res.sendStatus(200);
     } catch (e) {
-      if (e instanceof team.TeamServiceError) {
+      if (e instanceof team.ModelError) {
         throw createError(400, e.message);
       } else {
         throw e;

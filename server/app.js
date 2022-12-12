@@ -10,9 +10,8 @@ const db = require('../db');
 const app = express();
 
 const models = require('./models')(db);
-const services = require('./services')(models);
 
-const serverContext = { app, db, models, services };
+const serverContext = { app, db, models };
 
 app.use(morgan.successHandler);
 app.use(morgan.errorHandler);
