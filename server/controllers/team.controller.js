@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 
 const teamBodySerializer = ({ name }) => {
   return {
@@ -8,19 +9,35 @@ const teamBodySerializer = ({ name }) => {
 const create = (services) => {
   const { team } = services;
   return async (req, res) => {
-    const { body } = req;
-    await team.create(teamBodySerializer(body));
-    res.sendStatus(201);
+    try {
+      const { body } = req;
+      await team.create(teamBodySerializer(body));
+      res.sendStatus(201);
+    } catch (e) {
+      if (e instanceof team.EmployeeServiceError) {
+        throw createError(400, e.message);
+      } else {
+        throw e;
+      }
+    }
   }
 };
 
 const update = (services) => {
   const { team } = services;
   return async (req, res) => {
-    const { body } = req;
-    const { id } = req.params;
-    await team.update(id, teamBodySerializer(body));
-    res.sendStatus(200);
+    try {
+      const { body } = req;
+      const { id } = req.params;
+      await team.update(id, teamBodySerializer(body));
+      res.sendStatus(200);
+    } catch (e) {
+      if (e instanceof team.EmployeeServiceError) {
+        throw createError(400, e.message);
+      } else {
+        throw e;
+      }
+    }
   }
 };
 

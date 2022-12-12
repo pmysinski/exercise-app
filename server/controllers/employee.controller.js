@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 
 // could use camelCase for api and translate it to underscore_case like this
 const employeeBodySerializer = ({ first_name, last_name, role, first_day_at_work, team_id, manager_id }) => {
@@ -19,7 +20,12 @@ const create = (services) => {
       await employee.create(employeeBodySerializer(body));
       res.sendStatus(201);
     } catch (e) {
-      res.sendStatus(500);
+      console.log('catched', e);
+      if (e instanceof employee.EmployeeServiceError) {
+        throw createError(400, e.message);
+      } else {
+        throw e;
+      }
     }
   }
 };
@@ -27,15 +33,18 @@ const create = (services) => {
 const update = (services) => {
   const { employee } = services;
   return async (req, res) => {
-  //  try {
+    try {
       const { body } = req;
       const { id } = req.params;
       await employee.update(id, employeeBodySerializer(body));
-      throw new Error('')
-     // res.sendStatus(200);
-   // } catch (e) {
-      res.sendStatus(500);
-   // }
+      res.sendStatus(200);
+    } catch (e) {
+      if (e instanceof employee.EmployeeServiceError) {
+        throw createError(400, e.message);
+      } else {
+        throw e;
+      }
+    }
   }
 };
 

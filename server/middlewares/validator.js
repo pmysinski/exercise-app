@@ -9,7 +9,7 @@ const validate = (schema) => async (req, res, next) => {
     });
     next();
   } catch (e) {
-    next(createError(400, e.errors.join(', ')));
+    next(createError.BadRequest(e.errors.join(', ')));
   }
 };
 

@@ -7,7 +7,6 @@ const team_id = () => yup.number();
 const manager_id = () => yup.number();
 const first_day_at_work = () => yup.date();
 
-
 const postSchema = yup.object({
   body: yup.object({
     first_name: first_name().required(),
