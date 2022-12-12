@@ -30,7 +30,7 @@ Make sure you have database setup then
 
 ### run all migrations
 
-`npx knex migrate:latest`
+`npm run db:migrate`
 
 ### rollback last migration
 
@@ -38,11 +38,20 @@ Make sure you have database setup then
 
 # testing
 
-## run tests
+## run unit tests
 
+`npm run test:unit`
 
+## run unit tests
 
-## In case of changing dependncies use:
-
+`npm run test:integration`
 
 # production
+
+Building the docker image:
+
+`docker build . --tag exercise-app`
+
+testing docker image locally
+
+`docker run -p 3000:3000 --env-file .env --net=host exercise-app`
